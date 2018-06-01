@@ -36,10 +36,24 @@ const dbGet = (req, res) => {
 // get
 router.get('/', dbGet);
 
+
 /*************************
-** ROUTE /:id **
-*************************/
+ ** ROUTE /:id **
+ *************************/
 // get
 router.get('/:id', dbGet);
+
+// insert
+router.post('/:id', (req, res) => {
+  const project_id = Number(req.params.id);
+  const { description, notes } = req.body;
+  const { defaultErr, postBadRequest } = errorMessages;
+  const actions = { project_id, description, notes, completed: false };
+  db.insert(actions)
+    .then(data => {
+      return (!description || !notes) ? error(res, 400, postBadRequest) : res.json(data);
+    })
+    .catch((err) => error(res, 500, defaultErr));
+});
 
 module.exports = router;
