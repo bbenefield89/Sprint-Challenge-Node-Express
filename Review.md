@@ -14,7 +14,7 @@
 > Middleware is basically a function created to let the server know what to do when a specific piece of code is being ran. For example, when the client requests a route, `http://localhost:5000`, we can use middleware to let Express know what we want to happen and what we want to return to the client.
 
 ## What is a Resource?
-> A stock or supply of money, materials, staff, and other assets that can be drawn on by a person or organization in order to function effectively.
+> "A stock or supply of money, materials, staff, and other assets that can be drawn on by a person or organization in order to function effectively." Resources are anything we can bring into our app to help us with functionality or presentaion. Resources can also refer to the methods we used to interact with a database, `GET`, `READ`, `UPDATE`, `DELETE`, ie. `CRUD`.
 
 ## What can the API return to help clients know if a request wasa successful?
 > The API can return an http status code of 200 for successful/OK
