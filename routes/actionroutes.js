@@ -56,4 +56,15 @@ router.post('/:id', (req, res) => {
     .catch((err) => error(res, 500, defaultErr));
 });
 
+// update
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const { project_id, description, notes, completed } = req.body;
+  const { defaultErr } = errorMessages;
+  const project = { project_id, description, notes, completed };
+  db.update(id, project)
+    .then(data => res.json(data))
+    .catch(() => error(res, 500, defaultErr));
+});
+
 module.exports = router;
