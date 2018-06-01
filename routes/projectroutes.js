@@ -40,8 +40,8 @@ router.get('/', dbGet);
 // insert
 router.post('/', (req, res) => {
   const { name, description } = req.body;
-  const project = { name, description, completed: false };
   const { defaultErr, postBadRequest } = errorMessages;
+  const project = { name, description, completed: false };
   db.insert(project)
     .then(data => {
       return (!name || !description) ? error(res, 400, postBadRequest) : res.json(data);
@@ -55,6 +55,17 @@ router.post('/', (req, res) => {
 // get
 router.get('/:id', dbGet);
 
+// update
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const { name, description, completed } = req.body;
+  const { defaultErr } = errorMessages;
+  const project = { name, description, completed };
+  db.insert(project)
+    .then(data => res.json(data))
+    .catch(() => error(res, 500, defaultErr));
+});
+
 // getProjectActions
 router.get('/:id/actions', (req, res) => {
   const { id } = req.params;
@@ -65,5 +76,6 @@ router.get('/:id/actions', (req, res) => {
     })
     .catch(() => error(error, 500, defaultErr));
 });
+
 
 module.exports = router;
