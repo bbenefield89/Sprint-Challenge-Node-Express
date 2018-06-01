@@ -6,7 +6,8 @@ const db = require('../data/helpers/projectModel');
 // error handler messages
 const errorMessages = {
   defaultErr: 'Something has gone horribly wrong. Check back later',
-  fourOhFour: 'Could not find resource'
+  fourOhFour: 'Could not find resource',
+  postBadRequest: 'Please provide a name and a description'
 };
 
 // TODO: automate the message used depending on the `statusCode` given
@@ -35,6 +36,18 @@ const dbGet = (req, res) => {
 *************************/
 // get
 router.get('/', dbGet);
+
+// insert
+router.post('/', (req, res) => {
+  const { name, description } = req.body;
+  const project = { name, description, completed: false };
+  const { defaultErr, postBadRequest } = errorMessages;
+  db.insert(project)
+    .then(data => {
+      return (!name || !description) ? error(res, 400, postBadRequest) : res.json(data);
+    })
+    .catch(() => error(res, 500, defaultErr));
+});
 
 /*************************
 ** ROUTE /:id **
