@@ -66,6 +66,17 @@ router.put('/:id', (req, res) => {
     .catch(() => error(res, 500, defaultErr));
 });
 
+// remove
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  const { defaultErr, fourOhFour } = errorMessages;
+  db.remove(id)
+    .then(data => {
+      (data) ? res.json(data) : error(res, 404, fourOhFour)
+    })
+    .catch(() => error(res, 500, defaultErr));
+});
+
 // getProjectActions
 router.get('/:id/actions', (req, res) => {
   const { id } = req.params;
